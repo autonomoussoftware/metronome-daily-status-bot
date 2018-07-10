@@ -1,0 +1,53 @@
+{
+  "name": "metronome-daily-status-bot",
+  "version": "0.0.1",
+  "description": "Metronome daily auction monitor",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "jest --coverage"
+  },
+  "author": "ndelvalle <nicolas.delvalle@bloq.com>",
+  "dependencies": {
+    "coincap-lib": "^1.0.0",
+    "config": "^1.30.0",
+    "date-fns": "^2.0.0-alpha.11",
+    "metronome-contracts": "^1.4.1",
+    "slack-winston": "0.0.9",
+    "web3": "^1.0.0-beta.34",
+    "winston": "^2.4.3",
+    "winston-papertrail": "^1.0.5"
+  },
+  "devDependencies": {
+    "eslint": "^5.0.1",
+    "eslint-config-bloq": "^1.3.0",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-jsdoc": "^3.7.1",
+    "eslint-plugin-mocha": "^5.0.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-prefer-arrow": "^1.1.2",
+    "eslint-plugin-promise": "^3.8.0",
+    "eslint-plugin-standard": "^3.1.0",
+    "jest": "^23.3.0",
+    "proxyquire": "^2.0.1",
+    "sinon": "^6.1.3"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "coverageThreshold": {
+      "global": {
+        "branches": 70,
+        "functions": 70,
+        "lines": 70,
+        "statements": 70
+      }
+    },
+    "collectCoverageFrom": [
+      "lib/**"
+    ],
+    "roots": [
+      "test/"
+    ]
+  }
+}

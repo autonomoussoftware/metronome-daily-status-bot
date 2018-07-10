@@ -1,0 +1,14 @@
+{
+  "eth": {
+    "wsUrl": "ETH_WS_URL"
+  },
+  "logger": {
+    "Papertrail": {
+      "host": "LOGGER_PAPERTRAIL_HOST",
+      "port": "LOGGER_PAPERTRAIL_PORT"
+    },
+    "Slack": {
+      "webhook_url": "LOGGER_SLACK_WEBHOOK_URL"
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "eth": {
+    "wsUrl": "ws://127.0.0.1:8546"
+  },
+  "logger": {
+    "Console": {
+      "colorize": true,
+      "handleExceptions": true,
+      "humanReadableUnhandledException": true,
+      "level": "debug",
+      "timestamp": true
+    },
+    "Papertrail": {
+      "colorize": true,
+      "flushOnClose": true,
+      "handleExceptions": true,
+      "inlineMeta": true,
+      "level": "info",
+      "program": "metronome-daily-status-bot"
+    },
+    "Slack": {
+      "level": "info"
+    }
+  }
+}
