@@ -1,26 +1,26 @@
 'use strict'
 
-const sinon = require('sinon')
-
-const data = {
-  heartbeat: {
-    minting: '10',
-    currAuction: '1',
-    currentAuctionPrice: '900000000',
-    _lastPurchasePrice: '100000000'
-  }
+const heartbeat = {
+  minting: '40',
+  currAuction: '1',
+  currentAuctionPrice: '100000000',
+  _lastPurchasePrice: '500000000'
 }
 
-const heartbeat = sinon.stub()
+let isFirstCall = true
+function getheartbeat () {
+  if (isFirstCall) {
+    isFirstCall = false
+    return { minting: 0, currAuction: 0 }
+  }
 
-heartbeat
-  .onFirstCall()
-  .returns(Object.assign({}, data, { currAuction: 0, minting: 0 }))
+  heartbeat.minting -= 20
+  if (heartbeat.minting === 0) {
+    heartbeat.currAuction += 1
+  }
 
-heartbeat.returns(Object.assign(data, {
-  currentAuctionPrice: data.currentAuctionPrice - 100,
-  minting: data.minting - 1
-}))
+  return heartbeat
+}
 
 const MetronomeContracts = function () {
   this.auctions = {
@@ -28,7 +28,7 @@ const MetronomeContracts = function () {
       heartbeat () {
         return {
           call () {
-            return Promise.resolve(heartbeat())
+            return Promise.resolve(getheartbeat())
           }
         }
       }

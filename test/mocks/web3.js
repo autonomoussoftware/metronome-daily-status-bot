@@ -3,6 +3,7 @@
 const EventEmitter = require('events')
 
 const emitter = new EventEmitter()
+const noop = () => undefined
 
 const Web3Mock = function () {
   this.eth = {
@@ -13,19 +14,15 @@ const Web3Mock = function () {
         }
       }
     },
-    clearSubscriptions () {
-
-    }
+    clearSubscriptions: noop
   }
-
   this.utils = {
     fromWei: v => v
   }
 }
 
-Web3Mock.emitMockEvent = function () {
-  let hash = 0
-  emitter.emit('data', { hash: hash += 1 })
+Web3Mock.emitMockEvent = function (data) {
+  emitter.emit('data', data)
 }
 
 module.exports = Web3Mock

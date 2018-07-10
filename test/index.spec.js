@@ -5,7 +5,6 @@
 const sinon = require('sinon')
 const web3Mock = require('./mocks/web3')
 const metronomeContractsMock = require('./mocks/metronome-contracts')
-const callAtMock = require('./mocks/call-at')
 
 const logger = {
   info: sinon.spy(),
@@ -20,7 +19,6 @@ jest.doMock('../logger', () => ({
 }))
 jest.doMock('web3', () => web3Mock)
 jest.doMock('metronome-contracts', () => metronomeContractsMock)
-jest.doMock('../lib/call-at', () => callAtMock)
 
 const monitor = require('../lib')
 
@@ -45,13 +43,28 @@ describe('Metronome daily auction monitor', function () {
     expect(monitor.auction.minPriceUSD).toBe(0)
   })
 
-  it('should start the monitor', function () {
+  it('should start the monitor and scan auctions', function () {
+    jest.useFakeTimers()
+
     return monitor.start()
       .then(function () {
         expect(monitor.isRunning).toBe(true)
         expect(monitor.auction.current).toBe(1)
         expect(typeof monitor.timer).toBe('number')
         expect(logger.info.calledTwice).toBe(true)
+
+        jest.runAllTimers()
+
+        web3Mock.emitMockEvent({ hash: 1 })
+        expect(typeof monitor.auction.startedAt).toBeDefined()
+        expect(typeof monitor.auction.maxPrice).toBeDefined()
+
+        process.nextTick(function () {
+          web3Mock.emitMockEvent({ hash: 2 })
+
+          expect(typeof monitor.auction.endedAt).toBeDefined()
+          expect(typeof monitor.auction.minPrice).toBeDefined()
+        })
       })
   })
 
