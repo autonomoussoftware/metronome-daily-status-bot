@@ -21,5 +21,11 @@
     "Slack": {
       "level": "info"
     }
+  },
+  "Twitter": {
+    "consumerKey": "",
+    "consumerSecret": "",
+    "accessTokenKey": "",
+    "accessTokenSecret": ""
   }
 }
