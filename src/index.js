@@ -9,6 +9,7 @@ const logger = require('../logger')
 const toUTC = require('./to-utc-date')
 const toUSD = require('./eth-to-usd.js')
 const callAt = require('./call-at')
+const tweet = require('./twitter')
 
 const toInt = str => Number.parseInt(str, 10)
 const toMs = secs => secs * 1000
@@ -48,10 +49,13 @@ function report (auction) {
   const nextPrice = BigNumber(minPrice).times(2)
   const nextPriceUSD = BigNumber(minPriceUSD).times(2)
 
-  logger.info('Today\'s #metronome Daily Supply Lot: 2880 $MET ' +
-              `Open ${maxPrice} ETH ($${maxPriceUSD}), Final ${minPrice} ` +
-              `ETH ($${minPriceUSD}), ${timeElapsed} elapsed. ` +
-              `Tomorrow open ${nextPrice} ETH ($${nextPriceUSD})`)
+  const message = 'Today\'s #metronome Daily Supply Lot: 2880 $MET ' +
+                  `Open ${maxPrice} ETH ($${maxPriceUSD}), Final ${minPrice} ` +
+                  `ETH ($${minPriceUSD}), ${timeElapsed} elapsed. ` +
+                  `Tomorrow open ${nextPrice} ETH ($${nextPriceUSD})`
+
+  logger.info(message)
+  return tweet(message)
 }
 
 function hasAuctionStarted (heartbeat, m) {

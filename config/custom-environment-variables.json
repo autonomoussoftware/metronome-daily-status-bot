@@ -9,6 +9,12 @@
     },
     "Slack": {
       "webhook_url": "LOGGER_SLACK_WEBHOOK_URL"
+    },
+    "Twitter": {
+      "consumerKey": "TWITTER_CONSUMER_KEY",
+      "consumerSecret": "TWITTER_CONSUMER_SECRET",
+      "accessTokenKey": "TWITTER_ACCESS_TOKEN_KEY",
+      "accessTokenSecret": "TWITTER_ACCESS_TOKEN_SECRET"
     }
   }
 }

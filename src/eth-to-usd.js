@@ -2,8 +2,6 @@
 
 const coincap = require('coincap-lib')
 
-function toUSD (eth) {
-  return coincap.coin('ETH').then(res => res.price * eth)
-}
+const toUSD = eth => coincap.coin('ETH').then(res => res.price * eth)
 
 module.exports = toUSD

@@ -14,6 +14,7 @@
     "date-fns": "2.0.0-alpha.11",
     "metronome-contracts": "1.4.1",
     "slack-winston": "0.0.9",
+    "twitter": "1.7.1",
     "web3": "1.0.0-beta.34",
     "winston": "2.4.3",
     "winston-papertrail": "1.0.5"
@@ -40,5 +41,6 @@
     "roots": [
       "test/"
     ]
-  }
+  },
+  "license": "MIT"
 }
