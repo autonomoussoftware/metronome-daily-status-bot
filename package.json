@@ -11,7 +11,7 @@
     "bignumber.js": "7.2.1",
     "coincap-lib": "1.0.0",
     "config": "1.30.0",
-    "date-fns": "2.0.0-alpha.11",
+    "date-fns": "1.29.0",
     "metronome-contracts": "1.4.1",
     "slack-winston": "0.0.9",
     "twitter": "1.7.1",

@@ -1,5 +1,5 @@
 'use strict'
 
-const monitor = require('./src')
+const startMonitor = require('./src')
 
-monitor.start()
+startMonitor()

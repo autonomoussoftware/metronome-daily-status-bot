@@ -20,7 +20,7 @@ jest.doMock('../logger', () => ({
 jest.doMock('web3', () => web3Mock)
 jest.doMock('metronome-contracts', () => metronomeContractsMock)
 
-const monitor = require('../lib')
+const monitor = require('../src')
 
 describe('Metronome daily auction monitor', function () {
   beforeEach(function () {

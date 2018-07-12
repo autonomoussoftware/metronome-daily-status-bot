@@ -10,6 +10,6 @@ const client = new Twitter({
   access_token_secret: config.Twitter.accessTokenSecret
 })
 
-const tweet = content => client.post('statuses/update', { status: content })
+const tweet = status => client.post('statuses/update', { status })
 
 module.exports = tweet

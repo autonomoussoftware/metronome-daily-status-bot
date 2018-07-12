@@ -5,10 +5,12 @@
   "logger": {
     "Papertrail": {
       "host": "LOGGER_PAPERTRAIL_HOST",
-      "port": "LOGGER_PAPERTRAIL_PORT"
+      "port": "LOGGER_PAPERTRAIL_PORT",
+      "level": "LOGGER_PAPERTRAIL_LEVEL"
     },
     "Slack": {
-      "webhook_url": "LOGGER_SLACK_WEBHOOK_URL"
+      "webhook_url": "LOGGER_SLACK_WEBHOOK_URL",
+      "level": "LOGGER_SLACK_LEVEL"
     },
     "Twitter": {
       "consumerKey": "TWITTER_CONSUMER_KEY",

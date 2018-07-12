@@ -1,18 +1,16 @@
 'use strict'
 
-const differenceInMilliseconds = require('date-fns/differenceInMilliseconds')
-const formatDistance = require('date-fns/formatDistance')
-const toUTC = require('./to-utc-date')
+const differenceInMilliseconds = require('date-fns/difference_in_milliseconds')
+const distanceInWordsStrict = require('date-fns/distance_in_words_strict')
 
-function callFnAt (scanAuctionFn, date) {
-  const now = toUTC(new Date())
-  const startAt = toUTC(date)
-  const initIn = differenceInMilliseconds(startAt, now)
-  const timer = setTimeout(scanAuctionFn, initIn)
+function callFnAt (fn, date) {
+  const now = new Date()
+  const initIn = differenceInMilliseconds(date, now)
+  const timer = setTimeout(fn, initIn)
 
   return {
     timer,
-    timeRemaining: formatDistance(startAt, now, { includeSeconds: true })
+    timeRemaining: distanceInWordsStrict(date, now)
   }
 }
 
