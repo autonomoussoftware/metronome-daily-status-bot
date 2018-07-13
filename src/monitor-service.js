@@ -3,7 +3,7 @@
 const BigNumber = require('bignumber.js')
 const toUSD = require('./eth-to-usd.js')
 const Web3 = require('web3')
-const distanceInWordsStrict = require('date-fns/distance_in_words_strict')
+const timeDiffInWords = require('./time-diff-in-words')
 
 function hasAuctionStarted (heartbeat, m) {
   const { startedAt, current } = m.auction
@@ -48,7 +48,7 @@ function resetMonitorState (auction) {
 }
 
 function getReportMessage (auction) {
-  const timeElapsed = distanceInWordsStrict(auction.endedAt, auction.startedAt)
+  const timeElapsed = timeDiffInWords(auction.startedAt, auction.endedAt)
   const maxPrice = BigNumber(auction.maxPrice).toFixed(6)
   const maxPriceUSD = BigNumber(auction.maxPriceUSD).toFixed(2)
   const minPrice = BigNumber(auction.minPrice).toFixed(6)

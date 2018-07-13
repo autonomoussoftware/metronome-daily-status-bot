@@ -74,7 +74,7 @@ function scanAuction () {
             logger.info(message)
             tweet(message)
               .catch(function (err) {
-                logger.error('Twitter error:', err.message)
+                logger.warn('Twitter error:', err.message || err)
               })
 
             return subscription.unsubscribe()
@@ -86,16 +86,16 @@ function scanAuction () {
             logger.debug(`Scan auction ended, next scan will start in ${timeRemaining}`)
           })
           .catch(function (err) {
-            logger.error('Unsubscription error:', err.message)
+            logger.warn('Unsubscription error:', err.message || err)
           })
       })
       .catch(function (err) {
-        logger.error('Heartbeat error:', err.message)
+        logger.warn('Heartbeat error:', err.message || err)
       })
   })
 
   subscription.on('error', function (err) {
-    logger.error('Subscription error:', err.message)
+    logger.warn('Subscription error:', err.message || err)
   })
 }
 
@@ -113,5 +113,9 @@ function startMonitor () {
       logger.debug(`Scan auction will start in ${timeRemaining}`)
     })
 }
+
+process.on('beforeExit', function (code) {
+  logger.warn(`About to exit with code: ${code}`)
+})
 
 module.exports = startMonitor

@@ -1,7 +1,7 @@
 'use strict'
 
 const differenceInMilliseconds = require('date-fns/difference_in_milliseconds')
-const distanceInWordsStrict = require('date-fns/distance_in_words_strict')
+const timeDiffInWords = require('./time-diff-in-words')
 
 function callFnAt (fn, date) {
   const now = new Date()
@@ -10,7 +10,7 @@ function callFnAt (fn, date) {
 
   return {
     timer,
-    timeRemaining: distanceInWordsStrict(date, now)
+    timeRemaining: timeDiffInWords(now, date)
   }
 }
 
