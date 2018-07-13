@@ -45,7 +45,7 @@ const monitor = {
 }
 
 function scanAuction () {
-  logger.debug(`Scan auction ${monitor.auction.current} started`)
+  logger.info(`Scan auction ${monitor.auction.current} started`)
   const subscription = web3.eth.subscribe('newBlockHeaders')
 
   subscription.on('data', function (header) {

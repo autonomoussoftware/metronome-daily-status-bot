@@ -4,7 +4,8 @@
   "description": "Metronome daily auction monitor",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "config": "node -e \"console.log(JSON.stringify(require('config'), null, 2))\""
   },
   "author": "ndelvalle <nicolas.delvalle@bloq.com>",
   "dependencies": {
