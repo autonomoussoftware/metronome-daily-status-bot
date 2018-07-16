@@ -4,14 +4,19 @@ const heartbeat = {
   minting: '40',
   currAuction: '1',
   currentAuctionPrice: '100000000',
-  _lastPurchasePrice: '500000000'
+  _lastPurchasePrice: '500000000',
+  nextAuctionGMT: 1531785600000
 }
 
 let isFirstCall = true
 function getheartbeat () {
   if (isFirstCall) {
     isFirstCall = false
-    return { minting: 0, currAuction: 0 }
+    return {
+      minting: 0,
+      currAuction: 0,
+      nextAuctionGMT: heartbeat.nextAuctionGMT
+    }
   }
 
   heartbeat.minting -= 20

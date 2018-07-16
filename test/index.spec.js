@@ -5,22 +5,28 @@
 const sinon = require('sinon')
 const web3Mock = require('./mocks/web3')
 const metronomeContractsMock = require('./mocks/metronome-contracts')
+const callAtMock = require('./mocks/call-at')
+const monitorServicesMock = require('./mocks/monitor-service')
 
 const logger = {
   info: sinon.spy(),
   debug: sinon.spy(),
+  warn: sinon.spy(),
   error: sinon.spy()
 }
 
 jest.doMock('../logger', () => ({
   info: logger.info,
   debug: logger.debug,
-  error: logger.error
+  error: logger.error,
+  warn: logger.warn
 }))
 jest.doMock('web3', () => web3Mock)
 jest.doMock('metronome-contracts', () => metronomeContractsMock)
+jest.doMock('../src/call-at', () => callAtMock)
+jest.doMock('../src/monitor-service', () => monitorServicesMock)
 
-const monitor = require('../src')
+const startMonitor = require('../src')
 
 describe('Metronome daily auction monitor', function () {
   beforeEach(function () {
@@ -29,54 +35,32 @@ describe('Metronome daily auction monitor', function () {
     logger.error.resetHistory()
   })
 
-  it('should have defaults variables initialized', function () {
-    expect(typeof monitor).toBe('object')
-    expect(typeof monitor.auction).toBe('object')
-    expect(typeof monitor.timer).toBe('object')
-    expect(monitor.isRunning).toBe(false)
-    expect(monitor.auction.current).toBe(0)
-    expect(monitor.auction.startedAt).toBe(null)
-    expect(monitor.auction.endedAt).toBe(null)
-    expect(monitor.auction.maxPrice).toBe(0)
-    expect(monitor.auction.maxPriceUSD).toBe(0)
-    expect(monitor.auction.minPrice).toBe(0)
-    expect(monitor.auction.minPriceUSD).toBe(0)
-  })
-
   it('should start the monitor and scan auctions', function () {
     jest.useFakeTimers()
 
-    return monitor.start()
+    return startMonitor()
       .then(function () {
-        expect(monitor.isRunning).toBe(true)
-        expect(monitor.auction.current).toBe(1)
-        expect(typeof monitor.timer).toBe('number')
-        expect(logger.info.calledTwice).toBe(true)
+        jest.runOnlyPendingTimers()
 
-        jest.runAllTimers()
+        const debugSpy1Call = logger.debug.getCall(0)
+        const debugSpy2Call = logger.debug.getCall(1)
+
+        expect(logger.debug.called).toBe(true)
+        expect(logger.debug.calledTwice).toBe(true)
+
+        expect(debugSpy1Call.calledWith('Daily auction monitor started')).toBe(true)
+        expect(debugSpy2Call.calledWith('Scan auction will start in __TIME_REMAINING__')).toBe(true)
 
         web3Mock.emitMockEvent({ hash: 1 })
-        expect(typeof monitor.auction.startedAt).toBeDefined()
-        expect(typeof monitor.auction.maxPrice).toBeDefined()
 
-        process.nextTick(function () {
-          web3Mock.emitMockEvent({ hash: 2 })
+        expect(logger.info.calledOnce).toBe(true)
+        expect(logger.info.calledWith('Scan auction 1 started')).toBe(true)
 
-          expect(typeof monitor.auction.endedAt).toBeDefined()
-          expect(typeof monitor.auction.minPrice).toBeDefined()
-        })
+        expect(logger.debug.calledThrice).toBe(true)
+        expect(logger.debug.calledWith('New block header received: 1')).toBe(true)
+
+        web3Mock.emitMockEvent({ hash: 2 })
+        expect(logger.debug.calledWith('New block header received: 2')).toBe(true)
       })
-  })
-
-  it('should stop the monitor', function () {
-    jest.useFakeTimers()
-
-    monitor.stop()
-
-    expect(monitor.isRunning).toBe(false)
-    expect(clearTimeout).toHaveBeenCalledTimes(1)
-    expect(clearTimeout).toHaveBeenLastCalledWith(monitor.timer)
-    expect(logger.info.calledOnce).toBe(true)
-    expect(logger.info.calledWith('Daily auction monitor stopped')).toBe(true)
   })
 })

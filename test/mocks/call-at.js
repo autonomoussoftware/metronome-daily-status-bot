@@ -1,12 +1,14 @@
 'use strict'
 
-function callFnAt (scanAuctionFn) {
-  const timer = setTimeout(scanAuctionFn, 0)
+const callAt = require('../../src/call-at')
+
+function callAtMock (...args) {
+  const { timer } = callAt(...args)
 
   return {
     timer,
-    timeRemaining: 0
+    timeRemaining: '__TIME_REMAINING__'
   }
 }
 
-module.exports = callFnAt
+module.exports = callAtMock
