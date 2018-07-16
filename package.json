@@ -9,6 +9,7 @@
   },
   "author": "ndelvalle <nicolas.delvalle@bloq.com>",
   "dependencies": {
+    "before-exit": "1.0.0",
     "bignumber.js": "7.2.1",
     "coincap-lib": "1.0.0",
     "config": "1.30.0",

@@ -3,6 +3,8 @@
 const Web3 = require('web3')
 const MetronomeContracts = require('metronome-contracts')
 const config = require('config')
+const beforeExit = require('before-exit')
+
 const logger = require('../logger')
 const callAt = require('./call-at')
 const tweet = require('./twitter')
@@ -112,9 +114,12 @@ function startMonitor () {
       monitor.timer = timer
       logger.debug(`Scan auction will start in ${timeRemaining}`)
     })
+    .catch(function (err) {
+      logger.warn('Heartbeat error:', err.message || err)
+    })
 }
 
-process.on('beforeExit', function (code) {
+beforeExit.do(function (code) {
   logger.warn(`About to exit with code: ${code}`)
 })
 
