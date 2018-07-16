@@ -33,6 +33,7 @@ describe('Metronome daily auction monitor', function () {
     logger.info.resetHistory()
     logger.debug.resetHistory()
     logger.error.resetHistory()
+    logger.warn.resetHistory()
   })
 
   it('should start the monitor and scan auctions', function () {
