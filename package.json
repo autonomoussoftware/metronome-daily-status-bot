@@ -39,7 +39,7 @@
   },
   "jest": {
     "collectCoverageFrom": [
-      "lib/**"
+      "src/**"
     ],
     "roots": [
       "test/"

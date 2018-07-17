@@ -47,7 +47,7 @@ const monitor = {
 }
 
 function scanAuction () {
-  logger.info(`Scan auction ${monitor.auction.current} started`)
+  logger.info(`Auction started`)
   const subscription = web3.eth.subscribe('newBlockHeaders')
 
   subscription.on('data', function (header) {
@@ -57,6 +57,7 @@ function scanAuction () {
       .then(function (heartbeat) {
         logger.debug(`heartbeat current auction price: ${heartbeat.currentAuctionPrice}`)
         logger.debug(`heartbeat minting: ${heartbeat.minting}`)
+
         if (!hasAuctionStarted(heartbeat, monitor)) {
           return
         }
@@ -76,7 +77,7 @@ function scanAuction () {
             logger.info(message)
             tweet(message)
               .catch(function (err) {
-                logger.warn('Twitter error:', err.message || err)
+                logger.warn('Twitter failed:', err.message || err)
               })
 
             return subscription.unsubscribe()
@@ -88,16 +89,16 @@ function scanAuction () {
             logger.debug(`Scan auction ended, next scan will start in ${timeRemaining}`)
           })
           .catch(function (err) {
-            logger.warn('Unsubscription error:', err.message || err)
+            logger.warn('Failed setting final state:', err.message || err)
           })
       })
       .catch(function (err) {
-        logger.warn('Heartbeat error:', err.message || err)
+        logger.warn('Heartbeat failed:', err.message || err)
       })
   })
 
   subscription.on('error', function (err) {
-    logger.warn('Subscription error:', err.message || err)
+    logger.warn('Subscription failed:', err.message || err)
   })
 }
 
@@ -105,7 +106,7 @@ function startMonitor () {
   if (monitor.isRunning) {
     return
   }
-  logger.debug('Daily auction monitor started')
+  logger.verbose('Daily auction monitor started')
   monitor.isRunning = true
   return getHeartbeat()
     .then(function (heartbeat) {
@@ -115,7 +116,7 @@ function startMonitor () {
       logger.debug(`Scan auction will start in ${timeRemaining}`)
     })
     .catch(function (err) {
-      logger.warn('Heartbeat error:', err.message || err)
+      logger.warn('Heartbeat failed:', err.message || err)
     })
 }
 
