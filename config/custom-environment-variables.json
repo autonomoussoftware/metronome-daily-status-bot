@@ -1,6 +1,7 @@
 {
   "eth": {
-    "wsUrl": "ETH_WS_URL"
+    "wsUrl": "ETH_WS_URL",
+    "timeToLive": "ETH_WS_TIME_TO_LIVE"
   },
   "logger": {
     "Papertrail": {

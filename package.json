@@ -4,6 +4,9 @@
   "description": "Metronome daily auction monitor",
   "main": "index.js",
   "scripts": {
+    "start": "forever start forever.json",
+    "stop": "forever stopall",
+    "logs": "forever stopall",
     "test": "jest",
     "config": "node -e \"console.log(JSON.stringify(require('config'), null, 2))\""
   },
@@ -14,8 +17,12 @@
     "coincap-lib": "1.0.0",
     "config": "1.30.0",
     "date-fns": "1.29.0",
+    "forever": "0.15.3",
     "metronome-contracts": "1.4.1",
+    "node-persist": "3.0.1",
+    "promise-prototype-finally": "1.0.0",
     "slack-winston": "0.0.9",
+    "time-bombs": "1.0.0",
     "timediff": "1.1.1",
     "twitter": "1.7.1",
     "web3": "1.0.0-beta.34",

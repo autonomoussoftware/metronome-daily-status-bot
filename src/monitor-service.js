@@ -4,6 +4,7 @@ const BigNumber = require('bignumber.js')
 const toUSD = require('./eth-to-usd.js')
 const Web3 = require('web3')
 const timeDiffInWords = require('./time-diff-in-words')
+const { setLocalState, clearLocalState } = require('./local-state')
 
 function hasAuctionStarted (heartbeat, m) {
   const { startedAt, current } = m.auction
@@ -24,6 +25,7 @@ function setInitialState (heartbeat, m) {
   return toUSD(m.auction.maxPrice)
     .then(function (usd) {
       m.auction.maxPriceUSD = usd
+      return setLocalState(m.auction)
     })
 }
 
@@ -35,6 +37,7 @@ function setFinalState (heartbeat, m) {
   return toUSD(m.auction.minPrice)
     .then(function (usd) {
       m.auction.minPriceUSD = usd
+      return clearLocalState()
     })
 }
 

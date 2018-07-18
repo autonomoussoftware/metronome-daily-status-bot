@@ -5,6 +5,7 @@
 config/local.json
 node_modules
 coverage
+localstorage
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*

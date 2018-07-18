@@ -1,0 +1,6 @@
+{
+  "uid": "metronome-bot",
+  "append": true,
+  "watch": true,
+  "script": "server.js"
+}
