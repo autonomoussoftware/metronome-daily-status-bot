@@ -6,7 +6,7 @@
   "scripts": {
     "start": "forever start forever.json",
     "stop": "forever stopall",
-    "logs": "forever stopall",
+    "logs": "forever logs 0",
     "test": "jest",
     "config": "node -e \"console.log(JSON.stringify(require('config'), null, 2))\""
   },

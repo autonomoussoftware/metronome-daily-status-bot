@@ -7,9 +7,7 @@ function getLocalState () {
   return storage.init({ dir: config.storage.dir })
     .then(() => storage.getItem('state'))
     .then(function (state) {
-      if (!state) {
-        return state
-      }
+      if (!state) { return {} }
       if (state.startedAt) {
         state.startedAt = new Date(state.startedAt)
       }

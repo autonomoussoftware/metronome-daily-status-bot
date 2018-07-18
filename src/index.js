@@ -123,12 +123,12 @@ function startMonitor () {
   monitor.isRunning = true
 
   return Promise.all([getHeartbeat(), getLocalState()])
-    .then(function ([heartbeat, auction]) {
+    .then(function ([heartbeat, localState]) {
       // If the bot was shutdown during an auction we retrieve the information
       // from the storage, otherwise we wait until the next auction to start
       // processing
-      if (heartbeat.currAuction === auction.current) {
-        monitor.auction = auction
+      if (heartbeat.currAuction === localState.current) {
+        monitor.auction = localState
         logger.debug('Local Current auction state found, loading into memory')
         return scanAuction({ isRestart: true })
       }
