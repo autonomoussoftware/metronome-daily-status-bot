@@ -1,0 +1,12 @@
+{
+  "name": "bloq-service-logger",
+  "version": "1.0.0",
+  "dependencies": {
+    "slack-winston": "^0.0.9",
+    "winston": "^2.4.3",
+    "winston-papertrail": "^1.0.5"
+  },
+  "peerDependencies": {
+    "config": "^1.30.0"    
+  }
+}

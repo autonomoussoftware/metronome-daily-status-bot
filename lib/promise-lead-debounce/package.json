@@ -1,0 +1,7 @@
+{
+  "name": "promise-lead-debounce",
+  "version": "1.0.0",
+  "dependencies": {
+    "promise-prototype-finally": "^1.0.0"
+  }
+}
