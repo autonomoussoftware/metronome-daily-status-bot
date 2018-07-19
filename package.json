@@ -4,9 +4,7 @@
   "description": "Metronome daily auction monitor",
   "main": "index.js",
   "scripts": {
-    "start": "forever start forever.json",
-    "stop": "forever stopall",
-    "logs": "forever logs 0",
+    "start": "forever --minUptime 5000 --spinSleepTime 5000 server.js",
     "test": "jest",
     "config": "node -e \"console.log(JSON.stringify(require('config'), null, 2))\""
   },
@@ -14,20 +12,18 @@
   "dependencies": {
     "before-exit": "1.0.0",
     "bignumber.js": "7.2.1",
+    "bloq-service-logger": "file:lib/bloq-service-logger",
     "coincap-lib": "1.0.0",
     "config": "1.30.0",
     "date-fns": "1.29.0",
     "forever": "0.15.3",
     "metronome-contracts": "1.4.1",
     "node-persist": "3.0.1",
-    "promise-prototype-finally": "1.0.0",
-    "slack-winston": "0.0.9",
+    "promise-lead-debounce": "file:lib/promise-lead-debounce",
     "time-bombs": "1.0.0",
     "timediff": "1.1.1",
     "twitter": "1.7.1",
-    "web3": "1.0.0-beta.34",
-    "winston": "2.4.3",
-    "winston-papertrail": "1.0.5"
+    "web3": "1.0.0-beta.34"
   },
   "devDependencies": {
     "eslint": "5.0.1",

@@ -1,10 +1,5 @@
 'use strict'
 
-const forever = require('forever-monitor')
+const startMonitor = require('./src')
 
-const child = new (forever.Monitor)('bot.js', {
-  max: 3,
-  args: []
-})
-
-child.start()
+startMonitor()

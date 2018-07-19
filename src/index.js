@@ -5,11 +5,12 @@ const MetronomeContracts = require('metronome-contracts')
 const config = require('config')
 const beforeExit = require('before-exit')
 const timeBombs = require('time-bombs')
-const logger = require('../logger')
+const logger = require('bloq-service-logger')
+const debounce = require('promise-lead-debounce')
+
 const callAt = require('./call-at')
 const tweet = require('./twitter')
 const { getLocalState } = require('./local-state')
-const debounce = require('../lib/promise-lead-debounce')
 const {
   hasAuctionStarted,
   hasAuctionEnded,
