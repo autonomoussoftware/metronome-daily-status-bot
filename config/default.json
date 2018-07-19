@@ -23,7 +23,7 @@
       "level": "info"
     }
   },
-  "Twitter": {
+  "twitter": {
     "consumerKey": "",
     "consumerSecret": "",
     "accessTokenKey": "",
@@ -31,5 +31,6 @@
   },
   "storage": {
     "dir": "localstorage"
-  }
+  },
+  "leadStart": "60000"
 }

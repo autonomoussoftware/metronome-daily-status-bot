@@ -4,10 +4,10 @@ const Twitter = require('twitter')
 const config = require('config')
 
 const client = new Twitter({
-  consumer_key: config.Twitter.consumerKey,
-  consumer_secret: config.Twitter.consumerSecret,
-  access_token_key: config.Twitter.accessTokenKey,
-  access_token_secret: config.Twitter.accessTokenSecret
+  consumer_key: config.twitter.consumerKey,
+  consumer_secret: config.twitter.consumerSecret,
+  access_token_key: config.twitter.accessTokenKey,
+  access_token_secret: config.twitter.accessTokenSecret
 })
 
 const tweet = status => client.post('statuses/update', { status })

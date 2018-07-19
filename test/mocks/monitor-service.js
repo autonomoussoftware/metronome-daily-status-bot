@@ -1,7 +1,6 @@
 'use strict'
 
 const sinon = require('sinon')
-const monitorServices = require('../../src/monitor-service')
 
 const spies = {
   hasAuctionStarted: sinon.spy(),
@@ -14,32 +13,36 @@ const spies = {
 
 function hasAuctionStarted (...args) {
   spies.hasAuctionStarted(...args)
-  return monitorServices.hasAuctionStarted(...args)
+  return true
 }
 
 function hasAuctionEnded (...args) {
   spies.hasAuctionEnded(...args)
-  return monitorServices.hasAuctionEnded(...args)
+  return true
 }
 
-function setInitialState (...args) {
-  spies.setInitialState(...args)
-  return monitorServices.setInitialState(...args)
+function setInitialState (heartbeat, m) {
+  spies.setInitialState(heartbeat, m)
+
+  m.auction.startedAt = new Date()
+  m.auction.maxPrice = 1000
+  m.auction.maxPriceUSD = 10
+
+  return Promise.resolve()
 }
 
-function setFinalState (...args) {
-  spies.setFinalState(...args)
-  return monitorServices.setFinalState(...args)
-}
+function setFinalState (heartbeat, m) {
+  spies.setFinalState(heartbeat, m)
+  m.auction.endedAt = new Date()
+  m.auction.minPrice = 50
+  m.auction.minPriceUSD = 5
 
-function resetMonitorState (...args) {
-  spies.resetMonitorState(...args)
-  return monitorServices.resetMonitorState(...args)
+  return Promise.resolve()
 }
 
 function getReportMessage (...args) {
   spies.getReportMessage(...args)
-  return monitorServices.getReportMessage(...args)
+  return '__FINAL_STATE_MESSAGE__'
 }
 
 module.exports = {
@@ -47,7 +50,6 @@ module.exports = {
   hasAuctionEnded,
   setInitialState,
   setFinalState,
-  resetMonitorState,
   getReportMessage,
   spies
 }

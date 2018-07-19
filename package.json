@@ -20,6 +20,7 @@
     "metronome-contracts": "1.4.1",
     "node-persist": "3.0.1",
     "promise-lead-debounce": "file:lib/promise-lead-debounce",
+    "promise-prototype-finally": "1.0.0",
     "time-bombs": "1.0.0",
     "timediff": "1.1.1",
     "twitter": "1.7.1",

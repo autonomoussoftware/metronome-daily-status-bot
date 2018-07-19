@@ -16,8 +16,15 @@ const Web3Mock = function () {
     },
     clearSubscriptions: noop
   }
+
   this.utils = {
     fromWei: v => v
+  }
+
+  this.currentProvider = {
+    connection: {
+      close: noop
+    }
   }
 }
 

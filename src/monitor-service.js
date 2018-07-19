@@ -41,15 +41,6 @@ function setFinalState (heartbeat, m) {
     })
 }
 
-function resetMonitorState (auction) {
-  auction.startedAt = null
-  auction.endedAt = null
-  auction.maxPrice = 0
-  auction.maxPriceUSD = 0
-  auction.minPrice = 0
-  auction.minPriceUSD = 0
-}
-
 function getReportMessage (auction) {
   const timeElapsed = timeDiffInWords(auction.startedAt, auction.endedAt)
   const maxPrice = BigNumber(auction.maxPrice).toFixed(6)
@@ -59,10 +50,10 @@ function getReportMessage (auction) {
   const nextPrice = BigNumber(minPrice).times(2)
   const nextPriceUSD = BigNumber(minPriceUSD).times(2)
 
-  return 'Today\'s #metronome Daily Supply Lot: 2880 $MET \n' +
+  return 'Today\'s #metronome Daily Supply Lot: 2880 $MET\n' +
          `Open ${maxPrice} ETH ($${maxPriceUSD}), Final ${minPrice} ` +
-         `ETH ($${minPriceUSD}), ${timeElapsed} elapsed \n` +
-         `Tomorrow open ${nextPrice} ETH ($${nextPriceUSD}) \n` +
+         `ETH ($${minPriceUSD}), ${timeElapsed} elapsed\n` +
+         `Tomorrow open ${nextPrice} ETH ($${nextPriceUSD})\n` +
          'https://metronome.io'
 }
 
@@ -71,6 +62,5 @@ module.exports = {
   hasAuctionEnded,
   setInitialState,
   setFinalState,
-  resetMonitorState,
   getReportMessage
 }
