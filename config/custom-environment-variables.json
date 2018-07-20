@@ -14,7 +14,7 @@
       "level": "LOGGER_SLACK_LEVEL"
     }
   },
-  "Twitter": {
+  "twitter": {
     "consumerKey": "TWITTER_CONSUMER_KEY",
     "consumerSecret": "TWITTER_CONSUMER_SECRET",
     "accessTokenKey": "TWITTER_ACCESS_TOKEN_KEY",

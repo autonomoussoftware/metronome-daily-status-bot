@@ -50,8 +50,8 @@ const monitor = {
   }
 }
 
-function scanAuction () {
-  logger.info('Auction started')
+function scanAuction ({ isRestart } = {}) {
+  logger.verbose(`Blocks scan ${isRestart ? 'restarted' : 'started'}`)
 
   // Make sure the ethereum node we are connected is up and running. If for some
   // reason it hangs, exit the process to start the bot and connect to a new node
@@ -82,7 +82,7 @@ function scanAuction () {
         }
 
         if (!monitor.auction.startedAt) {
-          return setInitialState(heartbeat, monitor)
+          return setInitialState(heartbeat, monitor).then(() => logger.info('Auction started'))
         }
 
         if (!hasAuctionEnded(heartbeat, monitor)) {
@@ -134,13 +134,13 @@ function startMonitor () {
       if (heartbeat.currAuction === localState.current) {
         monitor.auction = localState
         logger.debug('Local auction state found, loading into memory')
-        return scanAuction()
+        return scanAuction({ isRestart: true })
       }
 
       // The Auction is currently running but we don't have any localstorage data
       if (heartbeat.minting > 0) {
         monitor.auction.current = heartbeat.currAuction
-        return scanAuction()
+        return scanAuction({ isRestart: true })
       }
 
       monitor.auction.current = heartbeat.currAuction + 1
