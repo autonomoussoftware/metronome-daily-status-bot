@@ -21,6 +21,7 @@ function hasAuctionEnded (heartbeat, m) {
 function setInitialState (heartbeat, m) {
   m.auction.startedAt = new Date()
   m.auction.maxPrice = Web3.utils.fromWei(heartbeat.currentAuctionPrice)
+  m.auction.current = heartbeat.currAuction
 
   return toUSD(m.auction.maxPrice)
     .then(function (usd) {
@@ -32,7 +33,6 @@ function setInitialState (heartbeat, m) {
 function setFinalState (heartbeat, m) {
   m.auction.endedAt = new Date()
   m.auction.minPrice = Web3.utils.fromWei(heartbeat._lastPurchasePrice)
-  m.auction.current += 1
 
   return toUSD(m.auction.minPrice)
     .then(function (usd) {
