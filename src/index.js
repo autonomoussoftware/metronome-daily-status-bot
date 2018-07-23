@@ -12,6 +12,7 @@ const callAt = require('./call-at')
 const tweet = require('./twitter')
 const { getLocalState } = require('./local-state')
 const debounce = require('../lib/promise-lead-debounce')
+const { clearLocalState } = require('./local-state')
 const {
   hasAuctionStarted,
   hasAuctionEnded,
@@ -135,6 +136,23 @@ function startMonitor () {
         monitor.auction = localState
         logger.debug('Local auction state found, loading into memory')
         return scanAuction({ isRestart: true })
+      }
+
+      // This scenario happens when the bot reconnects to a late node
+      if (heartbeat.currAuction < localState.current) {
+        logger.warn('Bot connected to a late node, reconnecting')
+        return process.exit()
+      }
+
+      // This scenario happens when the bot starts the auction using a late node
+      // and then it reconnects to an updated one
+      if (heartbeat.currAuction > localState.current) {
+        logger.warn('Bot found a newer auction, reseting state and restarting scan')
+        return clearLocalState()
+          .then(function () {
+            monitor.auction.current = heartbeat.currAuction
+            scanAuction({ isRestart: true })
+          })
       }
 
       // The Auction is currently running but we don't have any localstorage data
