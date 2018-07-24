@@ -21,6 +21,7 @@ const {
   getReportMessage
 } = require('./monitor-service')
 
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
 const toInt = str => Number.parseInt(str, 10)
 const toMs = secs => secs * 1000
 
@@ -56,7 +57,7 @@ function scanAuction ({ isRestart } = {}) {
 
   // Make sure the ethereum node we are connected is up and running. If for some
   // reason it hangs, exit the process to start the bot and connect to a new node
-  const bomb = timeBombs.create(config.eth.timeToLive, process.exit)
+  const bomb = timeBombs.create(config.eth.wsTimeToLive, process.exit)
 
   const web3 = new Web3(config.eth.wsUrl)
   const getHeartbeat = createHeartbeat(web3)
@@ -64,7 +65,7 @@ function scanAuction ({ isRestart } = {}) {
 
   subscription.on('data', debounce(function (header) {
     logger.debug(`New block header received: ${header.hash}`)
-    bomb.reset(config.eth.timeToLive)
+    bomb.reset(config.eth.wsTimeToLive)
 
     return getHeartbeat()
       .then(function (heartbeat) {
@@ -79,6 +80,7 @@ function scanAuction ({ isRestart } = {}) {
         }
 
         if (!hasAuctionStarted(heartbeat, monitor)) {
+          logger.debug('Auction has not started, waiting for next block event')
           return
         }
 
@@ -105,7 +107,9 @@ function scanAuction ({ isRestart } = {}) {
           .catch(function (err) {
             logger.warn('Failed setting final state:', err.message || err)
           })
-          .finally(process.exit)
+          // We are killing the bot using a timeout to try to avoid connecting
+          // to a late node
+          .finally(() => delay(config.delayBeforeExit).then(() => process.exit()))
       })
       .catch(function (err) {
         logger.warn('Heartbeat failed:', err.message || err)
@@ -129,6 +133,9 @@ function startMonitor () {
 
   return Promise.all([getHeartbeat(), getLocalState()])
     .then(function ([heartbeat, localState]) {
+      logger.debug(`Heartbeat: ${JSON.stringify(heartbeat, null, 2)}`)
+      logger.debug(`Local storage heartbeat: ${JSON.stringify(localState, null, 2)}`)
+
       // If the bot was shutdown during an auction we retrieve the information
       // from the storage, otherwise we wait until the next auction to start
       // processing
@@ -157,6 +164,7 @@ function startMonitor () {
 
       // The Auction is currently running but we don't have any localstorage data
       if (heartbeat.minting > 0) {
+        logger.warn('Bot started on a live auction')
         monitor.auction.current = heartbeat.currAuction
         return scanAuction({ isRestart: true })
       }

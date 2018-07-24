@@ -1,7 +1,7 @@
 {
   "eth": {
     "wsUrl": "ETH_WS_URL",
-    "timeToLive": "ETH_WS_TIME_TO_LIVE"
+    "wsTimeToLive": "ETH_WS_TIME_TO_LIVE"
   },
   "logger": {
     "Papertrail": {
@@ -19,5 +19,7 @@
     "consumerSecret": "TWITTER_CONSUMER_SECRET",
     "accessTokenKey": "TWITTER_ACCESS_TOKEN_KEY",
     "accessTokenSecret": "TWITTER_ACCESS_TOKEN_SECRET"
-  }
+  },
+  "leadStart": "LEAD_START",
+  "delayBeforeExit": "DELAY_BEFORE_EXIT"
 }
