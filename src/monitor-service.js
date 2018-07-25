@@ -47,8 +47,8 @@ function getReportMessage (auction) {
   const maxPriceUSD = BigNumber(auction.maxPriceUSD).toFixed(2)
   const minPrice = BigNumber(auction.minPrice).toFixed(6)
   const minPriceUSD = BigNumber(auction.minPriceUSD).toFixed(2)
-  const nextPrice = BigNumber(minPrice).times(2)
-  const nextPriceUSD = BigNumber(minPriceUSD).times(2)
+  const nextPrice = BigNumber(minPrice).times(2).toFixed(6)
+  const nextPriceUSD = BigNumber(minPriceUSD).times(2).toFixed(2)
 
   return 'Today\'s #metronome Daily Supply Lot: 2880 $MET\n' +
          `Open ${maxPrice} ETH ($${maxPriceUSD}), Final ${minPrice} ` +
