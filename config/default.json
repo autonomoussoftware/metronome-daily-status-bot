@@ -3,6 +3,9 @@
     "wsUrl": "ws://127.0.0.1:8546",
     "wsTimeToLive": 120000
   },
+  "coincap": {
+    "retries": 5
+  },
   "logger": {
     "Console": {
       "colorize": true,

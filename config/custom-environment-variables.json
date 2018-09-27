@@ -3,6 +3,9 @@
     "wsUrl": "ETH_WS_URL",
     "wsTimeToLive": "ETH_WS_TIME_TO_LIVE"
   },
+  "coincap": {
+    "retries": "COINCAP_RETRIES"
+  },
   "logger": {
     "Papertrail": {
       "host": "LOGGER_PAPERTRAIL_HOST",

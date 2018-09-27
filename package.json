@@ -19,6 +19,7 @@
     "forever": "0.15.3",
     "metronome-contracts": "1.4.1",
     "node-persist": "3.0.1",
+    "p-retry": "2.0.0",
     "promise-lead-debounce": "file:lib/promise-lead-debounce",
     "promise-prototype-finally": "1.0.0",
     "time-bombs": "1.0.0",
