@@ -19,12 +19,15 @@ function hasAuctionEnded (heartbeat, m) {
 }
 
 function setInitialState (heartbeat, m) {
-  return toUSD(m.auction.maxPrice)
+  const maxPrice = Web3.utils.fromWei(heartbeat.currentAuctionPrice)
+
+  return toUSD(maxPrice)
     .then(function (usd) {
       m.auction.startedAt = new Date()
-      m.auction.maxPrice = Web3.utils.fromWei(heartbeat.currentAuctionPrice)
+      m.auction.maxPrice = maxPrice
       m.auction.current = heartbeat.currAuction
       m.auction.maxPriceUSD = usd
+
       return setLocalState(m.auction)
     })
 }
