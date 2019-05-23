@@ -45,9 +45,8 @@ describe('Metronome daily auction monitor', function () {
       .then(function () {
         jest.runOnlyPendingTimers()
 
-        expect(logger.verbose.calledOnce).toBe(true)
-        expect(logger.debug.called).toBe(true)
-        expect(logger.debug.calledOnce).toBe(true)
+        expect(logger.verbose.callCount).toBe(2)
+        expect(logger.debug.callCount).toBe(3)
         expect(logger.debug.calledWith('Scan auction will start in __TIME_REMAINING__')).toBe(true)
 
         web3Mock.emitMockEvent({ hash: 1 })
