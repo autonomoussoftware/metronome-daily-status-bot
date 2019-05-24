@@ -1,0 +1,15 @@
+language: node_js
+cache: npm
+jobs:
+  include:
+    - stage: test
+      script: npm test
+    - stage: elastic beanstalk deploy
+      if: banch = master
+      deploy:
+        provider: elasticbeanstalk
+        access_key_id: $AWS_ACCES_KEY_ID
+        secret_access_key: $AWS_SECRET_ACCESS_KEY
+        region: sa-east-1
+        app: metronome-daily-status-bot
+        env: metronome-daily-status-bot-test
