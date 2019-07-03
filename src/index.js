@@ -3,6 +3,7 @@
 const Web3 = require('web3')
 const MetronomeContracts = require('metronome-contracts')
 const config = require('config')
+const createMetronomeStatus = require('metronome-sdk-status')
 const beforeExit = require('before-exit')
 const timeBombs = require('time-bombs')
 const logger = require('bloq-service-logger')
@@ -27,15 +28,17 @@ const toMs = secs => secs * 1000
 
 function createHeartbeat (web3) {
   const contracts = new MetronomeContracts(web3)
+  const { getAuctionStatus } = createMetronomeStatus(contracts)
   return () =>
-    contracts.auctions.methods
-      .heartbeat()
-      .call()
-      .then(heartbeat => (Object.assign({}, heartbeat, {
-        minting: toInt(heartbeat.minting),
-        nextAuctionGMT: toMs(toInt(heartbeat.nextAuctionGMT)),
-        currAuction: toInt(heartbeat.currAuction)
-      })))
+    getAuctionStatus()
+      .then(status => ({
+        _lastPurchasePrice: status.lastPurchasePrice,
+        currAuction: toInt(status.currAuction),
+        currentAuctionPrice: status.currentAuctionPrice,
+        dailyMintable: status.dailyMintable,
+        minting: toInt(status.minting),
+        nextAuctionGMT: toMs(status.nextAuctionTime)
+      }))
 }
 
 const monitor = {
@@ -48,7 +51,8 @@ const monitor = {
     maxPrice: 0,
     maxPriceUSD: 0,
     minPrice: 0,
-    minPriceUSD: 0
+    minPriceUSD: 0,
+    supplyLot: '2880000000000000000000'
   }
 }
 

@@ -1,6 +1,7 @@
 'use strict'
 
 const heartbeat = {
+  _dailyMintable: '2880000000000000000000',
   minting: '40',
   currAuction: '1',
   currentAuctionPrice: '100000000',
@@ -28,12 +29,33 @@ function getheartbeat () {
 }
 
 const MetronomeContracts = function () {
-  this.auctions = {
+  this.Auctions = {
     methods: {
+      dailyAuctionStartTime () {
+        return {
+          call () {
+            return Promise.resolve()
+          }
+        }
+      },
       heartbeat () {
         return {
           call () {
             return Promise.resolve(getheartbeat())
+          }
+        }
+      },
+      lastPurchaseTick () {
+        return {
+          call () {
+            return Promise.resolve()
+          }
+        }
+      },
+      mintable () {
+        return {
+          call () {
+            return Promise.resolve()
           }
         }
       }

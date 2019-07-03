@@ -27,6 +27,7 @@ function setInitialState (heartbeat, m) {
       m.auction.maxPrice = maxPrice
       m.auction.current = heartbeat.currAuction
       m.auction.maxPriceUSD = usd
+      m.auction.supplyLot = heartbeat.dailyMintable
 
       return setLocalState(m.auction)
     })
@@ -51,8 +52,9 @@ function getReportMessage (auction) {
   const minPriceUSD = BigNumber(auction.minPriceUSD).toFixed(2)
   const nextPrice = BigNumber(minPrice).times(2).toFixed(6)
   const nextPriceUSD = BigNumber(minPriceUSD).times(2).toFixed(2)
+  const supplyLot = BigNumber(auction.supplyLot).div(1e18).toFixed(2)
 
-  return 'Today\'s #metronome Daily Supply Lot: 2880 $MET\n' +
+  return `Today's #metronome Daily Supply Lot: ${supplyLot} $MET\n` +
          `Open ${maxPrice} ETH ($${maxPriceUSD}), Final ${minPrice} ` +
          `ETH ($${minPriceUSD}), ${timeElapsed} elapsed\n` +
          `Tomorrow open ${nextPrice} ETH ($${nextPriceUSD})\n` +
