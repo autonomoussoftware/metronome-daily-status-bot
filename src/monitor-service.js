@@ -54,12 +54,13 @@ function getReportMessage (auction) {
   const nextPrice = BigNumber(minPrice).times(2).toFixed(6)
   const nextPriceUSD = BigNumber(minPriceUSD).times(2).toFixed(2)
   const supplyLot = BigNumber(auction.supplyLot).div(1e18).toFixed(2)
-  const { symbol } = config.eth
+  const { displayName, symbol } = config.eth
 
-  return `Today's #metronome Daily Supply Lot: ${supplyLot} $MET\n` +
-         `Open ${maxPrice} ${symbol} ($${maxPriceUSD}), Final ${minPrice} ` +
-         `${symbol} ($${minPriceUSD}), ${timeElapsed} elapsed\n` +
-         `Tomorrow open ${nextPrice} ${symbol} ($${nextPriceUSD})\n` +
+  return `Today's #metronome daily supply lot at ${displayName}: ${supplyLot} $MET\n` +
+         `Open ${maxPrice} ${symbol} ($${maxPriceUSD}), ` +
+         `Final ${minPrice} ${symbol} ($${minPriceUSD}), ` +
+         `${timeElapsed} elapsed\n` +
+         `Tomorrow's open ${nextPrice} ${symbol} ($${nextPriceUSD})\n` +
          'https://metronome.io'
 }
 

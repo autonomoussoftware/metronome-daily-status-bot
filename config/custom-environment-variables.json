@@ -1,5 +1,8 @@
 {
   "eth": {
+    "chain": "ETH_CHAIN",
+    "displayName": "ETH_DISPLAY_NAME",
+    "symbol": "ETH_SYMBOL",
     "wsUrl": "ETH_WS_URL",
     "wsTimeToLive": "ETH_WS_TIME_TO_LIVE"
   },
