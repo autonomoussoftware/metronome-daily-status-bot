@@ -1,6 +1,7 @@
 'use strict'
 
 const BigNumber = require('bignumber.js')
+const config = require('config')
 const toUSD = require('./eth-to-usd.js')
 const Web3 = require('web3')
 const timeDiffInWords = require('./time-diff-in-words')
@@ -53,11 +54,12 @@ function getReportMessage (auction) {
   const nextPrice = BigNumber(minPrice).times(2).toFixed(6)
   const nextPriceUSD = BigNumber(minPriceUSD).times(2).toFixed(2)
   const supplyLot = BigNumber(auction.supplyLot).div(1e18).toFixed(2)
+  const { symbol } = config.eth
 
   return `Today's #metronome Daily Supply Lot: ${supplyLot} $MET\n` +
-         `Open ${maxPrice} ETH ($${maxPriceUSD}), Final ${minPrice} ` +
-         `ETH ($${minPriceUSD}), ${timeElapsed} elapsed\n` +
-         `Tomorrow open ${nextPrice} ETH ($${nextPriceUSD})\n` +
+         `Open ${maxPrice} ${symbol} ($${maxPriceUSD}), Final ${minPrice} ` +
+         `${symbol} ($${minPriceUSD}), ${timeElapsed} elapsed\n` +
+         `Tomorrow open ${nextPrice} ${symbol} ($${nextPriceUSD})\n` +
          'https://metronome.io'
 }
 

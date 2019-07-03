@@ -27,7 +27,7 @@ const toInt = str => Number.parseInt(str, 10)
 const toMs = secs => secs * 1000
 
 function createHeartbeat (web3) {
-  const contracts = new MetronomeContracts(web3)
+  const contracts = new MetronomeContracts(web3, config.eth.chain)
   const { getAuctionStatus } = createMetronomeStatus(contracts)
   return () =>
     getAuctionStatus()

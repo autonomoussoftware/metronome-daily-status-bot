@@ -5,6 +5,6 @@ const coincap = require('coincap-lib')
 const config = require('config')
 
 const retry = fn => pRetry(fn, { retries: config.coincap.retries })
-const toUSD = eth => retry(() => coincap.coin('ETH').then(res => res.price * eth))
+const toUSD = eth => retry(() => coincap.coin(config.eth.symbol).then(res => res.price * eth))
 
 module.exports = toUSD
