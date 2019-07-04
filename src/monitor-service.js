@@ -9,7 +9,7 @@ const { setLocalState, clearLocalState } = require('./local-state')
 
 function hasAuctionStarted (heartbeat, m) {
   const { startedAt, current } = m.auction
-  return startedAt || (current === heartbeat.currAuction && heartbeat.minting > 0)
+  return startedAt || current === heartbeat.currAuction
 }
 
 function hasAuctionEnded (heartbeat, m) {
