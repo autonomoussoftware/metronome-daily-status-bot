@@ -1,5 +1,3 @@
-/* global jest, describe, it, expect, beforeEach */
-
 'use strict'
 
 const sinon = require('sinon')

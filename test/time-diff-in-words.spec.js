@@ -1,5 +1,3 @@
-/* global describe, it, expect */
-
 'use strict'
 
 const timeDiffInWords = require('../src/time-diff-in-words')
