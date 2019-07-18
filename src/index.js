@@ -89,7 +89,7 @@ function scanAuction ({ isRestart } = {}) {
         }
 
         if (!monitor.auction.startedAt) {
-          return setInitialState(heartbeat, monitor).then(() => logger.info('Auction started'))
+          return setInitialState(heartbeat, monitor).then(() => logger.info('Auction started on', config.eth.symbol))
         }
 
         if (!hasAuctionEnded(heartbeat, monitor)) {
