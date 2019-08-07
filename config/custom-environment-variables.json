@@ -3,13 +3,8 @@
     "chain": "ETH_CHAIN",
     "displayName": "ETH_DISPLAY_NAME",
     "symbol": "ETH_SYMBOL",
-    "id": "COINCAP_COIN_ID",
     "wsUrl": "ETH_WS_URL",
     "wsTimeToLive": "ETH_WS_TIME_TO_LIVE"
-  },
-  "coincap": {
-    "retries": "COINCAP_RETRIES",
-    "baseUrl": "BASE_URL"
   },
   "logger": {
     "Papertrail": {

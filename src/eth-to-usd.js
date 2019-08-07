@@ -2,7 +2,8 @@
 
 const pRetry = require('p-retry')
 const config = require('config')
-const fetch = require('isomorphic-fetch')
+const { BittrexClient } = require('bittrex-node')
+const client = new BittrexClient()
 const retry = fn => pRetry(fn, { retries: config.coincap.retries })
-const toUSD = eth => retry(() => fetch(`${config.coincap.baseUrl}/rates/${config.eth.id}`).then(response => response.json().then(res => res.data.rateUsd * eth)))
+const toUSD = eth => retry(() => client.ticker(`USD-${config.eth.symbol}`).then(res => res.Last * eth))
 module.exports = toUSD
