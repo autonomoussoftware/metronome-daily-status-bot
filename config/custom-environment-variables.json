@@ -6,9 +6,7 @@
     "wsUrl": "ETH_WS_URL",
     "wsTimeToLive": "ETH_WS_TIME_TO_LIVE"
   },
-  "coincap": {
-    "retries": "COINCAP_RETRIES"
-  },
+  "retries": "RETRY_ATTEMPT",
   "logger": {
     "Papertrail": {
       "host": "LOGGER_PAPERTRAIL_HOST",

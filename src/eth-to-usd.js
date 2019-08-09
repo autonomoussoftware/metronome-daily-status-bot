@@ -1,10 +1,9 @@
 'use strict'
 
 const pRetry = require('p-retry')
-const coincap = require('coincap-lib')
 const config = require('config')
-
-const retry = fn => pRetry(fn, { retries: config.coincap.retries })
-const toUSD = eth => retry(() => coincap.coin(config.eth.symbol).then(res => res.price * eth))
-
+const { BittrexClient } = require('bittrex-node')
+const client = new BittrexClient()
+const retry = fn => pRetry(fn, { retries: config.retries })
+const toUSD = eth => retry(() => client.ticker(`USD-${config.eth.symbol}`).then(res => res.Last * eth))
 module.exports = toUSD
